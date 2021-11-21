@@ -9,7 +9,17 @@ class Circuit (models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     length = models.fields.IntegerField(null= True, blank=True, default=0)
 
-# class Lap(models.Model):
+class Lap(models.Model):
+    WEATHER_TYPES = (
+        ('R', 'Rainy'),
+        ('S', 'Sunny'),
+        ('C', 'Cloudy')
+    )
+    time = models.TimeField()
+    circuit = models.ForeignKey(Circuit, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    weather= models.CharField(max_length=1, choices=WEATHER_TYPES)
+
 
 
 # adds a circuitobject
