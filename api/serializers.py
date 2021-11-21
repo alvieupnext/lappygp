@@ -22,3 +22,12 @@ class CircuitSerializer(serializers.ModelSerializer):
   def create(self, validated_data):
     circuit = apps.get_model('playground', 'circuit').objects.create(**validated_data)
     return circuit
+
+class LapSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = apps.get_model('playground', 'lap')
+    fields = ['id', 'time', 'circuit', 'user', 'weather', 'uploaded_on']
+
+  def create(self, validated_data):
+    lap = apps.get_model('playground', 'lap').objects.create(**validated_data)
+    return lap
