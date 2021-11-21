@@ -6,7 +6,8 @@ class Circuit (models.Model):
     name = models.CharField(max_length=30)
     land = models.CharField(max_length=30)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    length = models.fields.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    length = models.fields.IntegerField(null= True, blank=True, default=0)
 
 # class Lap(models.Model):
 
