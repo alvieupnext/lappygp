@@ -24,6 +24,7 @@ class Lap(models.Model):
     circuit = models.ForeignKey(Circuit, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     weather= models.CharField(max_length=1, choices=WEATHER_TYPES)
+    uploaded_on = models.DateTimeField(auto_now_add=True)
 
 
 
