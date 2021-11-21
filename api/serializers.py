@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
 class CircuitSerializer(serializers.ModelSerializer):
   class Meta:
     model = apps.get_model('playground', 'circuit')
-    fields = ['name', 'land', 'created_by', 'length']
+    fields = ['id', 'name', 'land', 'created_by', 'length']
 
   def create(self, validated_data):
     circuit = apps.get_model('playground', 'circuit').objects.create(**validated_data)
