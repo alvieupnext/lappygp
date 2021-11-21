@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 
 class FollowerList (models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
-    followers = models.ManyToManyField(User, related_name='followers')
-    follows = models.ManyToManyField(User, related_name='follows')
+    followers = models.ManyToManyField(User, related_name='followers', blank=True)
+    follows = models.ManyToManyField(User, related_name='follows', blank=True)
 
 class Circuit (models.Model):
     name = models.CharField(max_length=30)
