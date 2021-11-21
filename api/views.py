@@ -2,6 +2,7 @@ from rest_framework import viewsets
 from django.contrib.auth.models import User
 from .serializers import UserSerializer, CircuitSerializer, LapSerializer, FollowerListSerializer
 from django.apps import apps
+from .models import Circuit, Lap, FollowerList
 
 # Create your views here.
 
@@ -16,13 +17,13 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class CircuitViewSet(viewsets.ModelViewSet):
-  queryset = apps.get_model('playground', 'circuit').objects.all()
+  queryset = Circuit.objects.all()
   serializer_class = CircuitSerializer
 
 class LapViewSet(viewsets.ModelViewSet):
-  queryset = apps.get_model('playground', 'lap').objects.all()
+  queryset = Lap.objects.all()
   serializer_class = LapSerializer
 
 class FollowerListViewSet(viewsets.ModelViewSet):
-  queryset = apps.get_model('playground', 'followerlist').objects.all()
+  queryset = FollowerList.objects.all()
   serializer_class = FollowerListSerializer
