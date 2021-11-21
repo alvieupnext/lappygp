@@ -8,6 +8,12 @@ from django.apps import apps
 class UserViewSet(viewsets.ModelViewSet):
   queryset = User.objects.all()
   serializer_class = UserSerializer
+  def get_queryset(self):
+    userId = self.request.query_params.get("id", None)
+    if userId:
+      return User.objects.filter(id=userId)
+    return super().get_queryset()
+
 
 class CircuitViewSet(viewsets.ModelViewSet):
   queryset = apps.get_model('playground', 'circuit').objects.all()
