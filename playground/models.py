@@ -2,6 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
+class FollowerList (models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    followers = models.ManyToManyField(User, related_name='followers')
+    follows = models.ManyToManyField(User, related_name='follows')
+
 class Circuit (models.Model):
     name = models.CharField(max_length=30)
     land = models.CharField(max_length=30)
