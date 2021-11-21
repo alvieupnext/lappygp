@@ -31,3 +31,8 @@ class LapSerializer(serializers.ModelSerializer):
   def create(self, validated_data):
     lap = apps.get_model('playground', 'lap').objects.create(**validated_data)
     return lap
+
+class FollowerListSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = apps.get_model('playground', 'followerlist')
+    fields = ['user', 'followers', 'follows']
