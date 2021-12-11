@@ -41,8 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'corsheaders',
-    'users',
     'api',
 ]
 
@@ -142,7 +140,4 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
    ),
-   # 'DEFAULT_PERMISSION_CLASSES': (
-   #      'rest_framework.permissions.IsAdminUser'
-   # ),
 }
