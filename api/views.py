@@ -8,11 +8,15 @@ from django.views.decorators.csrf import csrf_exempt
 import wikipediaapi
 import json
 
-
+#For all the ViewSets is the following true: You can only POST to the API if you're authenticated, if you're not you can only see the contents
 class UserProfileViewSet(viewsets.ModelViewSet):
+  #enforce the permission
   permission_classes = (IsAuthenticatedOrReadOnly,)
+  #establish the queryset
   queryset = UserProfile.objects.all()
+  #use our serializer for lay-out and handling create, update and delete
   serializer_class = UserProfileSerializer
+  #adding the ability to take query parameters
   def get_queryset(self):
     userId = self.request.query_params.get("user", None)
     if userId:
@@ -21,21 +25,24 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
 
 def getInfoFromWikipedia(name):
+  #get the wikipedia pages in english
   wiki_wiki = wikipediaapi.Wikipedia('en')
+  #search for the page
   page = wiki_wiki.page(name)
+  #if found, return title, summary and link as a json
   if page.exists():
     data = {"title": page.title, "summary": page.summary, "link": page.fullurl}
     return HttpResponse(content=json.dumps(data), content_type='application/json')
+  #else throw a 400 error
   return HttpResponse('<h1>Wiki Not Found</h1>', status=408)
 
-
-
+#able to bypass csrf
 @csrf_exempt
 def WikiView(request):
+  #front-end can request wikipedia information using POST
   if request.method == "POST":
     name = request.POST['circuit_name']
     return getInfoFromWikipedia(name)
-  return HttpResponse('<h1>Hello HttpResponse</h1>')
 
 class UserViewSet(viewsets.ModelViewSet):
   permission_classes = (IsAuthenticatedOrReadOnly,)
