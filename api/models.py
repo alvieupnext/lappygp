@@ -1,16 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import User
-# Create your models here.
+
+# We are using the default Django User model for our users
 
 class UserProfile(models.Model):
+    # corresponds to just one user
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # saves a profile picture
     avatar = models.ImageField(upload_to='images')
 
+#tracks when an user has followed another user
 class UserFollowing(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
     followed = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followed')
     date = models.DateTimeField(auto_now_add=True)
 
+#circuit representation
 class Circuit (models.Model):
     name = models.CharField(max_length=30)
     land = models.CharField(max_length=30)
@@ -19,6 +24,7 @@ class Circuit (models.Model):
     latitude = models.FloatField(max_length=40, blank=True, default = 0)
     longitude = models.FloatField(max_length=40, blank=True, default = 0)
 
+#lap representation
 class Lap(models.Model):
     WEATHER_TYPES = (
         ('R', 'Rainy'),
