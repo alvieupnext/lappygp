@@ -1,16 +1,12 @@
 from rest_framework import viewsets
 from django.contrib.auth.models import User
 from .serializers import UserSerializer, CircuitSerializer, LapSerializer, FollowerSerializer, UserProfileSerializer
-from django.apps import apps
 from .models import Circuit, Lap, UserProfile, UserFollowing
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from django.http import HttpResponse
-from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 import wikipediaapi
 import json
-
-
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
@@ -45,11 +41,6 @@ class UserViewSet(viewsets.ModelViewSet):
   permission_classes = (IsAuthenticatedOrReadOnly,)
   queryset = User.objects.all()
   serializer_class = UserSerializer
-  # def get_queryset(self):
-  #   userId = self.request.query_params.get("id", None)
-  #   if userId:
-  #     return User.objects.filter(id=userId)
-  #   return super().get_queryset()
 
 
 class CircuitViewSet(viewsets.ModelViewSet):
