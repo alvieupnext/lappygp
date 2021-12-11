@@ -1,10 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
-from django.apps import apps
-from PIL import Image
 from .models import Circuit, Lap, UserProfile, UserFollowing
-from rest_framework.permissions import IsAuthenticated
 import requests
 import json
 from geopy.geocoders import Nominatim
