@@ -15,5 +15,6 @@ router.register('profiles', UserProfileViewSet)
 
 urlpatterns = [
   path('', include(router.urls)),
+  # this allows to use the wikipedia API
   path('wiki', WikiView,name="wikipedia")
 ]
