@@ -37,8 +37,18 @@ def uploadLap(lap):
 class UserProfileSerializer(serializers.ModelSerializer):
   class Meta:
     model = UserProfile
-    fields = ['avatar']
+    fields = ['user', 'avatar']
 
+  # only update if the user information belongs to the user who requested the information
+  def update(self, instance, validated_data):
+    user = self.context['request'].user
+    if user.pk != instance.user.id:
+      raise serializers.ValidationError({"authorize": "You dont have permission for this user."})
+    instance.avatar = validated_data['avatar']
+    instance.save()
+    return instance
+
+# Serializer for the users
 class UserSerializer(serializers.ModelSerializer):
   userprofile = UserProfileSerializer()
 
