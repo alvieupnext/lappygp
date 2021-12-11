@@ -4,7 +4,14 @@ from .serializers import UserSerializer, CircuitSerializer, LapSerializer, Follo
 from django.apps import apps
 from .models import Circuit, Lap, UserProfile, UserFollowing
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.views.decorators.csrf import csrf_exempt
+import wikipediaapi
+import json
+
+
+
 
 class UserProfileViewSet(viewsets.ModelViewSet):
   permission_classes = (IsAuthenticatedOrReadOnly,)
@@ -16,17 +23,23 @@ class UserProfileViewSet(viewsets.ModelViewSet):
       return UserProfile.objects.filter(user=userId)
     return super().get_queryset()
 
-  # @action(detail=True, methods=['put'])
-  # def profile(self, request, pk=None):
-  #   user = self.get_object()
-  #   profile = user.profile
-  #   serializer = UserProfileSerializer(profile, data=request.data)
-  #   if serializer.is_valid():
-  #     serializer.save()
-  #     return Response(serializer.data, status=200)
-  #   else:
-  #     return Response(serializer.errors, status=400)
 
+def getInfoFromWikipedia(name):
+  wiki_wiki = wikipediaapi.Wikipedia('en')
+  page = wiki_wiki.page(name)
+  if page.exists():
+    data = {"title": page.title, "summary": page.summary, "link": page.fullurl}
+    return HttpResponse(content=json.dumps(data), content_type='application/json')
+  return HttpResponse('<h1>Wiki Not Found</h1>', status=408)
+
+
+
+@csrf_exempt
+def WikiView(request):
+  if request.method == "POST":
+    name = request.POST['circuit_name']
+    return getInfoFromWikipedia(name)
+  return HttpResponse('<h1>Hello HttpResponse</h1>')
 
 class UserViewSet(viewsets.ModelViewSet):
   permission_classes = (IsAuthenticatedOrReadOnly,)

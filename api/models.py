@@ -16,7 +16,8 @@ class Circuit (models.Model):
     land = models.CharField(max_length=30)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    length = models.fields.IntegerField(null= True, blank=True, default=0)
+    latitude = models.FloatField(max_length=40, blank=True, default = 0)
+    longitude = models.FloatField(max_length=40, blank=True, default = 0)
 
 class Lap(models.Model):
     WEATHER_TYPES = (

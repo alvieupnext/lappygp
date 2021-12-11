@@ -7,6 +7,12 @@ from .models import Circuit, Lap, UserProfile, UserFollowing
 from rest_framework.permissions import IsAuthenticated
 import requests
 import json
+from geopy.geocoders import Nominatim
+
+def getCoordinates(name):
+  loc = Nominatim(user_agent="GetLoc")
+  getLoc = loc.geocode(name)
+  return getLoc.latitude, getLoc.longitude
 
 # upload user-generated lap times to a third-party database
 def uploadLap(lap):
@@ -77,10 +83,16 @@ class CircuitSerializer(serializers.ModelSerializer):
   # created_by = UserSerializer()
   class Meta:
     model = Circuit
-    fields = ['id', 'name', 'land', 'created_by', 'length', 'created_at']
+    fields = ['id', 'name', 'land', 'created_by', 'created_at', 'longitude', 'latitude']
+    extra_kwargs = {'longitude': {'required': False}, 'latitude': {'required': False}}
 
   def create(self, validated_data):
+    name = validated_data['name']
+    long, lat = getCoordinates(name)
     circuit = Circuit.objects.create(**validated_data)
+    circuit.longitude = long
+    circuit.latitude = lat
+    circuit.save()
     return circuit
 
 class LapSerializer(serializers.ModelSerializer):
