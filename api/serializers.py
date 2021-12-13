@@ -17,14 +17,13 @@ def getCoordinates(name):
 def uploadLap(lap):
   # get all the needed info for the database
   time = str(lap.time)
-  print(time)
   circt = lap.circuit.name
   use = lap.user.username
   weather = lap.weather
   # Link to the third party database
   url = 'https://lappygp-5ce5.restdb.io/rest/laptimes'
   # prepare the data we want to send to the database
-  payload = json.dumps({'time': time, 'circuit': circt, 'user': use, 'weather': weather })
+  payload = json.dumps({'time': time, 'circuit': circt, 'user': use, 'weather': weather})
   #needed headers
   headers = {
     'content-type': "application/json",
@@ -33,7 +32,6 @@ def uploadLap(lap):
   }
   #send a POST request to the API
   response = requests.request("POST", url, data=payload, headers=headers)
-  print(response.text)
 
 
 # Serializer for the UserProfile
