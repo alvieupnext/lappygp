@@ -17,11 +17,12 @@ class UserProfileViewSet(viewsets.ModelViewSet):
   #use our serializer for lay-out and handling create, update and delete
   serializer_class = UserProfileSerializer
   #adding the ability to take query parameters
-  def get_queryset(self):
-    userId = self.request.query_params.get("user", None)
-    if userId:
-      return UserProfile.objects.filter(user=userId)
-    return super().get_queryset()
+  # def get_queryset(self):
+  #   userId = self.request.query_params.get("username", None)
+  #   print(userId)
+  #   if userId:
+  #     return UserProfile.objects.filter(username=userId)
+  #   return super().get_queryset()
 
 
 def getInfoFromWikipedia(name):
@@ -45,9 +46,14 @@ def WikiView(request):
     return getInfoFromWikipedia(name)
 
 class UserViewSet(viewsets.ModelViewSet):
-  permission_classes = (IsAuthenticatedOrReadOnly,)
   queryset = User.objects.all()
   serializer_class = UserSerializer
+  def get_queryset(self):
+    userId = self.request.query_params.get("username", None)
+    print(userId)
+    if userId:
+      return User.objects.filter(username=userId)
+    return super().get_queryset()
 
 
 class CircuitViewSet(viewsets.ModelViewSet):
