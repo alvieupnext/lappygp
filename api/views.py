@@ -59,6 +59,11 @@ class CircuitViewSet(viewsets.ModelViewSet):
   permission_classes = (IsAuthenticatedOrReadOnly,)
   queryset = Circuit.objects.all()
   serializer_class = CircuitSerializer
+  def get_queryset(self):
+    name = self.request.query_params.get("name", None)
+    if name:
+      return Circuit.objects.filter(name=name)
+    return super().get_queryset()
 
 class LapViewSet(viewsets.ModelViewSet):
   permission_classes = (IsAuthenticatedOrReadOnly,)
