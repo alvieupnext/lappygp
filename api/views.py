@@ -50,7 +50,6 @@ class UserViewSet(viewsets.ModelViewSet):
   serializer_class = UserSerializer
   def get_queryset(self):
     userId = self.request.query_params.get("username", None)
-    print(userId)
     if userId:
       return User.objects.filter(username=userId)
     return super().get_queryset()
@@ -65,6 +64,7 @@ class LapViewSet(viewsets.ModelViewSet):
   permission_classes = (IsAuthenticatedOrReadOnly,)
   queryset = Lap.objects.all()
   serializer_class = LapSerializer
+
 
 class FollowerViewSet(viewsets.ModelViewSet):
   permission_classes = (IsAuthenticatedOrReadOnly,)
