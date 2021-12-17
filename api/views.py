@@ -64,7 +64,15 @@ class LapViewSet(viewsets.ModelViewSet):
   permission_classes = (IsAuthenticatedOrReadOnly,)
   queryset = Lap.objects.all()
   serializer_class = LapSerializer
-
+  def get_queryset(self):
+    user = self.request.query_params.get("user", None)
+    circuit = self.request.query_params.get("circuit", None)
+    result = Lap.objects.all()
+    if user:
+      result = result.filter(user=user)
+    if circuit:
+      result = result.filter(circuit=circuit)
+    return result
 
 class FollowerViewSet(viewsets.ModelViewSet):
   permission_classes = (IsAuthenticatedOrReadOnly,)
