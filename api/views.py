@@ -85,6 +85,10 @@ class FollowerViewSet(viewsets.ModelViewSet):
   serializer_class = FollowerSerializer
   def get_queryset(self):
     user = self.request.query_params.get("user", None)
+    by = self.request.query_params.get("by", None)
+    result = UserFollowing.objects.all()
     if user:
-      return UserFollowing.objects.filter(followed=user)
-    return UserFollowing.objects.all()
+      result = result.filter(followed=user)
+    if by:
+      result = result.filter(user=by)
+    return result
