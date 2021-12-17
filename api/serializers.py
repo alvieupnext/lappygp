@@ -100,7 +100,7 @@ class CircuitSerializer(serializers.ModelSerializer):
     #get name from our data
     name = validated_data['name']
     #get the coordinates
-    long, lat = getCoordinates(name)
+    lat, long = getCoordinates(name)
     #create circuit using user-given data
     circuit = Circuit.objects.create(**validated_data)
     #save longitude and latitude on the object
