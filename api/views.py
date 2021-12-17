@@ -70,3 +70,8 @@ class FollowerViewSet(viewsets.ModelViewSet):
   permission_classes = (IsAuthenticatedOrReadOnly,)
   queryset = UserFollowing.objects.all()
   serializer_class = FollowerSerializer
+  def get_queryset(self):
+    user = self.request.query_params.get("user", None)
+    if user:
+      return UserFollowing.objects.filter(followed=user)
+    return UserFollowing.objects.all()
