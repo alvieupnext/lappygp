@@ -70,12 +70,12 @@ class UserSerializer(serializers.ModelSerializer):
     return user
 
   def update(self, instance, validated_data):
-    #get information from the current user requesting
-    user = self.context['request'].user
+    # #get information from the current user requesting
+    # user = self.context['request'].user
 
-    #reject the update if the user information isn't from the user who sent the request
-    if user.pk != instance.pk:
-      raise serializers.ValidationError({"authorize": "You dont have permission for this user."})
+    # #reject the update if the user information isn't from the user who sent the request
+    # if user.pk != instance.pk:
+    #   raise serializers.ValidationError({"authorize": "You dont have permission for this user."})
 
     #else update what is needed
     instance.username = validated_data['username']
