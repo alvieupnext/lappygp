@@ -92,7 +92,7 @@ class CircuitSerializer(serializers.ModelSerializer):
   # created_by = UserSerializer()
   class Meta:
     model = Circuit
-    fields = ['id', 'name', 'land', 'created_by', 'created_at', 'longitude', 'latitude']
+    fields = ['id', 'name',  'created_by', 'created_at', 'longitude', 'latitude']
     #allow longitude and latitude to be optional (so our API can fill these correctly in
     extra_kwargs = {'longitude': {'required': False}, 'latitude': {'required': False}}
 

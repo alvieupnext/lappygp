@@ -18,7 +18,6 @@ class UserFollowing(models.Model):
 #circuit representation
 class Circuit (models.Model):
     name = models.CharField(max_length=30)
-    land = models.CharField(max_length=30)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     latitude = models.FloatField(max_length=40, blank=True, default = 0)
