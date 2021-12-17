@@ -30,7 +30,7 @@ class Lap(models.Model):
         ('S', 'Sunny'),
         ('C', 'Cloudy')
     )
-    time = models.TimeField()
+    time = models.CharField(max_length=30)
     circuit = models.ForeignKey(Circuit, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     weather= models.CharField(max_length=1, choices=WEATHER_TYPES)
