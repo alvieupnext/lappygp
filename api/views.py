@@ -42,7 +42,9 @@ def getInfoFromWikipedia(name):
 def WikiView(request):
   #front-end can request wikipedia information using POST
   if request.method == "POST":
-    name = request.POST['circuit_name']
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    name = body['circuit_name']
     return getInfoFromWikipedia(name)
 
 class UserViewSet(viewsets.ModelViewSet):
