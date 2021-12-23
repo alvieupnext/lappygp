@@ -19,7 +19,7 @@ def uploadLap(lap):
   time = str(lap.time)
   circt = lap.circuit.name
   use = lap.user.username
-  weather = lap.weather
+  weather = lap.get_weather_display()
   # Link to the third party database
   url = 'https://lappygp-5ce5.restdb.io/rest/laptimes'
   # prepare the data we want to send to the database
